@@ -92,9 +92,14 @@ public class Model {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
-
-
+        int size = b.size();
+        for (int col = 0; col < size; col += 1) {
+            for (int row = 0; row < size; row += 1) {
+                if (b.tile(col, row) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -104,9 +109,14 @@ public class Model {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
-
-
+        int size = b.size();
+        for (int col = 0; col < size; col += 1) {
+            for (int row = 0; row < size; row += 1) {
+                if (b.tile(col,row) != null && b.tile(col,row).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -117,9 +127,21 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
-
-
+        if (emptySpaceExists(b)) {
+            return true;
+        }
+        int size = b.size();
+        for (int col = 0; col < size; col += 1) {
+            for (int row = 0; row < size - 1; row += 1) {
+                int curValue = b.tile(col,row).value();
+                int belowValue = b.tile(col,row + 1).value();
+                if (curValue == belowValue) {return true;}
+                if (col < size - 1) {
+                    int rightValue = b.tile(col + 1,row).value();
+                    if (curValue == rightValue) {return true;}
+                }
+            }
+        }
         return false;
     }
 
